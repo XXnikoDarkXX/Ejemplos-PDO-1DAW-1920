@@ -11,17 +11,16 @@ import java.util.Random;
  *Clase que modela a una persona para mi programa de pruebas
  * @author Miguel Páramos
  */
-public class Persona {
-    private String nombre; //el nombre de la persona
+public class Persona extends Animal{
     private String apellido; //el apellido de la persona
     private boolean genero; //true masculino, false femenino
-    private byte edad; //la edad de la persona. Debe estar entre 0 y 130
     private String nacionalidad; //nacionalidad de la persona
     private Mascota[] mascota; //Las mascotas de esta persona
     private Persona madre; //Madre biológica
     private Persona padre; //Padre biológico
     
     public Persona(){
+        super("Anonimo",(byte)50);
         String[] nombresPosiblesHombre={"Miguel","Raul","Alvaro","Nico","Javi","Dani","Jacob","Juan Luis","Jose","Tiburcio"};
         String[] nombresPosiblesMujer={"Noelia","Silvia","Angela","Claudia","Estefanía","Gregoria","Olga","Monica","Eugenia","Patricia"};
         String[] apellidosPosibles={"Jiménez","Gómez","Otero","Sánchez","Sanpatricio","Hashimura","Smith","Lennon","Strummer","Prattchet","Trump"};
@@ -32,14 +31,17 @@ public class Persona {
         this.genero=r.nextBoolean();
         
         if(genero){
-            this.nombre=nombresPosiblesHombre[r.nextInt(nombresPosiblesHombre.length)];
+            //TODO mañana lo cambiamos
+            //this.nombre=nombresPosiblesHombre[r.nextInt(nombresPosiblesHombre.length)];
         }else{
-            this.nombre=nombresPosiblesMujer[r.nextInt(nombresPosiblesMujer.length)];
+            //TODO mañana lo cambiamos
+            //this.nombre=nombresPosiblesMujer[r.nextInt(nombresPosiblesMujer.length)];
         }
         this.apellido=apellidosPosibles[r.nextInt(apellidosPosibles.length)];
         this.nacionalidad=nacionalidadesPosibles[r.nextInt(nacionalidadesPosibles.length)];
         
-        this.edad=(byte)r.nextInt(100);
+        //TODO mañana lo cambiamos
+        //this.edad=(byte)r.nextInt(100);
         
         this.mascota=new Mascota[r.nextInt(6)];
         for (int i = 0; i < mascota.length; i++) {
@@ -57,9 +59,8 @@ public class Persona {
      * @param na nacionalidad
      */
     public Persona(String n,String a,String genero,byte e,String na){
-        this.setNombre(n);
+        super(n,e);
         this.setApellido(a);
-        this.setEdad(e);
         this.setNacionalidad(na);
         this.setGenero(genero);
         this.mascota=new Mascota[5];
@@ -74,9 +75,8 @@ public class Persona {
      * @param m array de mascota
      */
     public Persona(String n,String a,String genero,byte e,String na,Mascota[] m){
-        this.setNombre(n);
+        super(n,e);
         this.setApellido(a);
-        this.setEdad(e);
         this.setGenero(genero);
         this.setNacionalidad(na);
         this.setMascota(m);
@@ -93,11 +93,10 @@ public class Persona {
      */
     public Persona(String n,String a,String genero,byte e,String na,
             Persona m,Persona p){
+        super(n,e);
         this.setNacionalidad(na);
-        this.setNombre(n);
         this.setApellido(a);
         this.setGenero(genero);
-        this.setEdad(e);
         this.setMadre(m);
         this.setPadre(p);
         this.mascota=new Mascota[5];
@@ -133,7 +132,6 @@ public class Persona {
      */
     public String toString() {
         String aux="";
-       aux+=nombre+" ";
        if(apellido!=null){
             aux+=apellido;
        }
@@ -146,14 +144,11 @@ public class Persona {
        if(nacionalidad!=null){
              aux+="Nacionalidad: "+nacionalidad+"\n";
        }
-       if(edad!=0){
-           aux+="Edad: "+edad+"\n";
-       }
        if(this.madre!=null){
-           aux+="Madre: "+madre.nombre+" "+madre.apellido+"\n";
+           //aux+="Madre: "+madre.nombre+" "+madre.apellido+"\n";
        }
        if(this.padre!=null){
-           aux+="Padre: "+padre.nombre+" "+padre.apellido+"\n";
+           //aux+="Padre: "+padre.nombre+" "+padre.apellido+"\n";
        }
        for(int i=0;i<mascota.length;i++){
            if(mascota[i]!=null){
@@ -167,7 +162,8 @@ public class Persona {
      * función que añade un año a la edad de la persona
      */
     public void cumplirAños(){
-        this.edad++;
+        //TODO mañana la cambiamos
+        // this.edad++;
     }
     
     /**
@@ -175,17 +171,11 @@ public class Persona {
      * @param p2 persona con la que se comparará la edad
      * @return true-> this es mayor que p2, false-> en caso contrario
      */
-    public boolean mayorQue(Persona p2){
+    //TODO mañana la cambiamos
+    /*public boolean mayorQue(Persona p2){
         return edad>p2.edad;
-    }
-    
-    /**
-     * getter de nombre
-     * @return nombre de la persona
-     */
-    public String getNombre(){
-        return this.nombre;
-    }
+    }*/
+
     
     /**
      * getter de apellido
@@ -203,13 +193,7 @@ public class Persona {
         return this.nacionalidad;
     }
     
-    /**
-     * getter de edad
-     * @return edad de la persona en años
-     */
-    public String getEdad(){
-        return this.edad+" años";
-    }
+
     
     /**
      * getter de madre
@@ -256,21 +240,7 @@ public class Persona {
                     + " No vale cambiarlo al butanero.");
         }
     }
-    /**
-     * Setter de nombre con filtro anticanis
-     * @param n nuevo nombre
-     */
-    public final void setNombre(String n){
-        //Todavía no os hemos enseñado ER :'(
-        this.nombre=n.replace("0","").replace("1","").replace("2","")
-                .replace("3","").replace("4","").replace("5","")
-                .replace("6","").replace("7","").replace("8","")
-                .replace("9","").replace("_","").replace("-","").
-                toLowerCase().replace("xxx", "");
-        String primeraLetra=
-                nombre.substring(0,1).toUpperCase();
-        nombre=primeraLetra+nombre.substring(1);
-    }
+   
     
     /**
      * setter de apellido
@@ -288,17 +258,7 @@ public class Persona {
         this.nacionalidad=n;
     }
     
-    /**
-     * Setter de edad
-     * @param e la nueva edad
-     */
-    public final void setEdad(byte e){
-        if(e>0){
-            this.edad=e;
-        }else{
-            System.out.println("Edad no válida. No se va a cambiar");
-        }
-    }
+
    
     public final void setMascota(Mascota[] m){
         this.mascota=m;

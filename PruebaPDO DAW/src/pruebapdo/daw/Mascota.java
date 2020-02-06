@@ -12,12 +12,10 @@ import java.util.Random;
  *
  * @author Miguel Páramos
  */
-public class Mascota {
+public class Mascota extends Animal{
 
-    private String nombre; //El nombre de la mascota
     private String especie; //La especie de la mascota. (Gato, perro, pollo..)
     private String raza;//La raza de la mascota (Pastor alemán, bodeguero, angora...)
-    private byte edad; //Edad en años de la mascota
     private float peso; //peso en kg de la mascota
 
     /**
@@ -30,20 +28,21 @@ public class Mascota {
      * @param p peso en kg
      */
     public Mascota(String n, String e, String r, byte ed, float p) {
-        this.nombre = n;
+        super(n,ed);
         this.especie = e;
         this.raza = r;
-        this.edad = ed;
         this.peso = p;
     }
 
     public Mascota() {
+        super("Anonimo",(byte)12);
         String[] nombresPosibles = {"Buster", "Bolt", "Pancho", "Sancho", "Garfield", "Coco", "Turuleta", "Sultán", "Aladín", "Sputnik"};
         String[] especiesPosibles = {"Perro", "Gato", "Agaporni", "Serpiente", "Cobaya", "Loro", "Pez", "Conejo", "Lagarto", "Tortuga", "Araña"};
         String[] razasPosibles=null;
         
         Random r=new Random();
-        this.nombre=nombresPosibles[r.nextInt(nombresPosibles.length)];
+        //TODO, echarle cuentas a esto mañana
+        //this.nombre=nombresPosibles[r.nextInt(nombresPosibles.length)];
         this.especie=especiesPosibles[r.nextInt(especiesPosibles.length)];
         
         if (this.especie.equals("Perro")) {
@@ -153,14 +152,41 @@ public class Mascota {
         }
         
         this.raza=razasPosibles[r.nextInt(razasPosibles.length)];
-        this.edad=(byte)r.nextInt(15);
+        //TODO echarle cuentas mañana
+        //this.edad=(byte)r.nextInt(15);
         this.peso=r.nextInt(15);
         
     }
 
+    public String getEspecie() {
+        return especie;
+    }
+
+    public void setEspecie(String especie) {
+        this.especie = especie;
+    }
+
+    public String getRaza() {
+        return raza;
+    }
+
+    public void setRaza(String raza) {
+        this.raza = raza;
+    }
+
+    public float getPeso() {
+        return peso;
+    }
+
+    public void setPeso(float peso) {
+        this.peso = peso;
+    }
+    
+    
+
     @Override
     public String toString() {
-        return "Mascota{" + "nombre=" + nombre + ", especie=" + especie + ", raza=" + raza + ", edad=" + edad + ", peso=" + peso + '}';
+        return "Mascota{" +  ", especie=" + especie + ", raza=" + raza + ", peso=" + peso + '}';
     }
 
 }
