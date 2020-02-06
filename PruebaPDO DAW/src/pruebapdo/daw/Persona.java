@@ -14,6 +14,7 @@ import java.util.Random;
 public class Persona {
     private String nombre; //el nombre de la persona
     private String apellido; //el apellido de la persona
+    private boolean genero; //true masculino, false femenino
     private byte edad; //la edad de la persona. Debe estar entre 0 y 130
     private String nacionalidad; //nacionalidad de la persona
     private Mascota[] mascota; //Las mascotas de esta persona
@@ -21,13 +22,20 @@ public class Persona {
     private Persona padre; //Padre biológico
     
     public Persona(){
-        String[] nombresPosibles={"Miguel","Raul","Alvaro","Nico","Javi","Dani","Noelia","Jacob","Juan Luis","Jose"};
+        String[] nombresPosiblesHombre={"Miguel","Raul","Alvaro","Nico","Javi","Dani","Jacob","Juan Luis","Jose","Tiburcio"};
+        String[] nombresPosiblesMujer={"Noelia","Silvia","Angela","Claudia","Estefanía","Gregoria","Olga","Monica","Eugenia","Patricia"};
         String[] apellidosPosibles={"Jiménez","Gómez","Otero","Sánchez","Sanpatricio","Hashimura","Smith","Lennon","Strummer","Prattchet","Trump"};
         String[] nacionalidadesPosibles={"Española","Francesa","Inglesa","Alemana","Japonesa","Congoleña","Portuguesa","Italiana"};
         
         Random r=new Random();
         
-        this.nombre=nombresPosibles[r.nextInt(nombresPosibles.length)];
+        this.genero=r.nextBoolean();
+        
+        if(genero){
+            this.nombre=nombresPosiblesHombre[r.nextInt(nombresPosiblesHombre.length)];
+        }else{
+            this.nombre=nombresPosiblesMujer[r.nextInt(nombresPosiblesMujer.length)];
+        }
         this.apellido=apellidosPosibles[r.nextInt(apellidosPosibles.length)];
         this.nacionalidad=nacionalidadesPosibles[r.nextInt(nacionalidadesPosibles.length)];
         
@@ -48,11 +56,12 @@ public class Persona {
      * @param e edad
      * @param na nacionalidad
      */
-    public Persona(String n,String a,byte e,String na){
+    public Persona(String n,String a,String genero,byte e,String na){
         this.setNombre(n);
         this.setApellido(a);
         this.setEdad(e);
         this.setNacionalidad(na);
+        this.setGenero(genero);
         this.mascota=new Mascota[5];
     }
     
@@ -64,10 +73,11 @@ public class Persona {
      * @param na nacionalidad
      * @param m array de mascota
      */
-    public Persona(String n,String a,byte e,String na,Mascota[] m){
+    public Persona(String n,String a,String genero,byte e,String na,Mascota[] m){
         this.setNombre(n);
         this.setApellido(a);
         this.setEdad(e);
+        this.setGenero(genero);
         this.setNacionalidad(na);
         this.setMascota(m);
     }
@@ -81,17 +91,39 @@ public class Persona {
      * @param m madre biologico
      * @param p padre biologico
      */
-    public Persona(String n,String a,byte e,String na,
+    public Persona(String n,String a,String genero,byte e,String na,
             Persona m,Persona p){
         this.setNacionalidad(na);
         this.setNombre(n);
         this.setApellido(a);
+        this.setGenero(genero);
         this.setEdad(e);
         this.setMadre(m);
         this.setPadre(p);
         this.mascota=new Mascota[5];
     }
     
+    /**
+     * setter de genero a partir de un string
+     * @param g genero, debe valer "Hombre" o "Mujer". Ignora las mayúsculas.
+     */
+    public final void setGenero(String g){
+        if(g.toLowerCase().equals("hombre")){
+            genero=true;
+        }else if(g.toLowerCase().equals("mujer")){
+            genero=false;
+        }else{
+            System.out.println("El genero solo puede valer \"Hombre\" o \"Mujer\"");
+        }
+    }
+    
+    /**
+     * getter de género
+     * @return String que vale "Hombre" o "Mujer".
+     */
+    public String getGenero(){
+        return (genero?"Hombre":"Mujer");
+    }
     
     
     
@@ -106,11 +138,22 @@ public class Persona {
             aux+=apellido;
        }
        aux+="\n---------------------\n";
+       if(genero){
+           aux+="Genero: Hombre\n";
+       }else{
+           aux+="Genero: Mujer\n";
+       }
        if(nacionalidad!=null){
              aux+="Nacionalidad: "+nacionalidad+"\n";
        }
        if(edad!=0){
            aux+="Edad: "+edad+"\n";
+       }
+       if(this.madre!=null){
+           aux+="Madre: "+madre.nombre+" "+madre.apellido+"\n";
+       }
+       if(this.padre!=null){
+           aux+="Padre: "+padre.nombre+" "+padre.apellido+"\n";
        }
        for(int i=0;i<mascota.length;i++){
            if(mascota[i]!=null){
@@ -187,13 +230,14 @@ public class Persona {
     /**
      * setter de madre, solo funciona si no hay ninguna 
      * establecida antes
-     * @param m madre asignada a la persona
+     * @param m madre asignada a la persona. Debe ser una mujer.
      */
     public final void setMadre(Persona m){
-        if(this.madre==null){
+        //Compruebo que la madre no se haya puesto antes y sea mujer
+        if(this.madre==null&&m.genero==false){
            this.madre=m;
         }else{
-            System.out.println("Madre no hay más que una. "
+            System.out.println("Madre no hay más que una, debe ser mujer. "
                     + "Y no puedes cambiarla. "
                     + "Te aguantas con la que te toca.");
         }
@@ -201,13 +245,14 @@ public class Persona {
     
     /**
      * setter de padre. Solo funciona si no se ha establecido padre antes
-     * @param p padre de la persona actual
+     * @param p padre de la persona actual. Debe ser un hombre.
      */
     public final void setPadre(Persona p){
-        if(this.padre==null){
+        //Compruebo que el padre no se ha establecido antes y es hombre
+        if(this.padre==null&&p.genero==true){
             this.padre=p;
         }else{
-            System.out.println("Te quedas con el padre que tienes."
+            System.out.println("Te quedas con el padre que tienes. Debe ser hombre."
                     + " No vale cambiarlo al butanero.");
         }
     }
