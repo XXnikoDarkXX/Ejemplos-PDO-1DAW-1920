@@ -17,6 +17,8 @@ public class Persona {
     private byte edad; //la edad de la persona. Debe estar entre 0 y 130
     private String nacionalidad; //nacionalidad de la persona
     private Mascota[] mascota; //Las mascotas de esta persona
+    private Persona madre; //Madre biológica
+    private Persona padre; //Padre biológico
     
     public Persona(){
         String[] nombresPosibles={"Miguel","Raul","Alvaro","Nico","Javi","Dani","Noelia","Jacob","Juan Luis","Jose"};
@@ -69,6 +71,30 @@ public class Persona {
         this.setNacionalidad(na);
         this.setMascota(m);
     }
+    
+    /**
+     * Constructor sin mascota, que permite poner padre y madre
+     * @param n nombre
+     * @param a apellido
+     * @param e edad
+     * @param na nacionalidad
+     * @param m madre biologico
+     * @param p padre biologico
+     */
+    public Persona(String n,String a,byte e,String na,
+            Persona m,Persona p){
+        this.setNacionalidad(na);
+        this.setNombre(n);
+        this.setApellido(a);
+        this.setEdad(e);
+        this.setMadre(m);
+        this.setPadre(p);
+        this.mascota=new Mascota[5];
+    }
+    
+    
+    
+    
     /**
      * método que concatena en un string todos los datos de persona
      * @return todos los datos de persona
@@ -143,18 +169,69 @@ public class Persona {
     }
     
     /**
-     * Setter de nombre
+     * getter de madre
+     * @return madre de la persona actual
+     */
+    public Persona getMadre(){
+        return this.madre;
+    }
+    
+    /**
+     * getter de padre
+     * @return padre de la persona actual
+     */
+    public Persona getPadre(){
+        return this.padre;
+    }
+    
+    /**
+     * setter de madre, solo funciona si no hay ninguna 
+     * establecida antes
+     * @param m madre asignada a la persona
+     */
+    public final void setMadre(Persona m){
+        if(this.madre==null){
+           this.madre=m;
+        }else{
+            System.out.println("Madre no hay más que una. "
+                    + "Y no puedes cambiarla. "
+                    + "Te aguantas con la que te toca.");
+        }
+    }
+    
+    /**
+     * setter de padre. Solo funciona si no se ha establecido padre antes
+     * @param p padre de la persona actual
+     */
+    public final void setPadre(Persona p){
+        if(this.padre==null){
+            this.padre=p;
+        }else{
+            System.out.println("Te quedas con el padre que tienes."
+                    + " No vale cambiarlo al butanero.");
+        }
+    }
+    /**
+     * Setter de nombre con filtro anticanis
      * @param n nuevo nombre
      */
-    public void setNombre(String n){
-        this.nombre=n;
+    public final void setNombre(String n){
+        //Todavía no os hemos enseñado ER :'(
+        this.nombre=n.replace("0","").replace("1","").replace("2","")
+                .replace("3","").replace("4","").replace("5","")
+                .replace("6","").replace("7","").replace("8","")
+                .replace("9","").replace("_","").replace("-","").
+                toLowerCase().replace("xxx", "");
+        String primeraLetra=
+                nombre.substring(0,1).toUpperCase();
+        nombre=primeraLetra+nombre.substring(1);
     }
     
     /**
      * setter de apellido
      * @param a nuevo apellido
      */
-    public void setApellido(String a){
+    final public void setApellido(String a){
         this.apellido=a;
     }
     
@@ -162,7 +239,7 @@ public class Persona {
      * Setter de nacionalidad
      * @param n la nueva nacionalidad
      */
-    public void setNacionalidad(String n){
+    public final void setNacionalidad(String n){
         this.nacionalidad=n;
     }
     
@@ -170,7 +247,7 @@ public class Persona {
      * Setter de edad
      * @param e la nueva edad
      */
-    public void setEdad(byte e){
+    public final void setEdad(byte e){
         if(e>0){
             this.edad=e;
         }else{
@@ -178,7 +255,7 @@ public class Persona {
         }
     }
    
-    public void setMascota(Mascota[] m){
+    public final void setMascota(Mascota[] m){
         this.mascota=m;
     }
     
