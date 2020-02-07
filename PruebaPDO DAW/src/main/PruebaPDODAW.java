@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pruebapdo.daw;
+package main;
 
 import java.util.Scanner;
+import pruebapdo.daw.Persona;
 
 /**
  *  Clase principal que ejecuta el programa de prueba

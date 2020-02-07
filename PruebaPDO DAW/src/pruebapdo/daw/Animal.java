@@ -5,6 +5,8 @@
  */
 package pruebapdo.daw;
 
+import java.util.Random;
+
 /**
  *
  * @author Ccenec
@@ -12,10 +14,15 @@ package pruebapdo.daw;
 public class Animal {
     private String nombre; //El nombre del animal
     private byte edad; //Edad en años del animal
-
+    protected final static Random r=new Random(); //Lo uso para sortear nombres y edades
+    
     public Animal(String nombre, byte edad) {
         this.setNombre(nombre);
         this.setEdad(edad);
+    }
+    
+    public Animal(){
+        
     }
     
         
@@ -35,6 +42,16 @@ public class Animal {
     public String getEdad(){
         return this.edad+" años";
     }
+        /**
+     * función que compara la edad de dos personas
+     * @param p2 persona con la que se comparará la edad
+     * @return true-> this es mayor que p2, false-> en caso contrario
+     */
+
+    public boolean mayorQue(Animal p2){
+        return edad>p2.edad;
+    }
+
     
      /**
      * Setter de nombre con filtro anticanis

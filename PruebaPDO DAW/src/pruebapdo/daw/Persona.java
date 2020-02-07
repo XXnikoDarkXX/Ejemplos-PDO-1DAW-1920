@@ -18,30 +18,32 @@ public class Persona extends Animal{
     private Mascota[] mascota; //Las mascotas de esta persona
     private Persona madre; //Madre biológica
     private Persona padre; //Padre biológico
+    private static final String[] nombresPosiblesHombre={"Miguel","Raul","Alvaro","Nico","Javi","Dani","Jacob","Juan Luis","Jose","Tiburcio"};
+    private static final String[] nombresPosiblesMujer={"Noelia","Silvia","Angela","Claudia","Estefanía","Gregoria","Olga","Monica","Eugenia","Patricia"};
+    private static final String[] apellidosPosibles={"Jiménez","Gómez","Otero","Sánchez","Sanpatricio","Hashimura","Smith","Lennon","Strummer","Prattchet","Trump"};
+    private static final String[] nacionalidadesPosibles={"Española","Francesa","Inglesa","Alemana","Japonesa","Congoleña","Portuguesa","Italiana"};
+        
     
     public Persona(){
-        super("Anonimo",(byte)50);
-        String[] nombresPosiblesHombre={"Miguel","Raul","Alvaro","Nico","Javi","Dani","Jacob","Juan Luis","Jose","Tiburcio"};
-        String[] nombresPosiblesMujer={"Noelia","Silvia","Angela","Claudia","Estefanía","Gregoria","Olga","Monica","Eugenia","Patricia"};
-        String[] apellidosPosibles={"Jiménez","Gómez","Otero","Sánchez","Sanpatricio","Hashimura","Smith","Lennon","Strummer","Prattchet","Trump"};
-        String[] nacionalidadesPosibles={"Española","Francesa","Inglesa","Alemana","Japonesa","Congoleña","Portuguesa","Italiana"};
-        
+        super();
         Random r=new Random();
         
         this.genero=r.nextBoolean();
         
+        
+        
         if(genero){
             //TODO mañana lo cambiamos
-            //this.nombre=nombresPosiblesHombre[r.nextInt(nombresPosiblesHombre.length)];
+            this.setNombre(nombresPosiblesHombre[r.nextInt(nombresPosiblesHombre.length)]);
         }else{
             //TODO mañana lo cambiamos
-            //this.nombre=nombresPosiblesMujer[r.nextInt(nombresPosiblesMujer.length)];
+            this.setNombre(nombresPosiblesMujer[r.nextInt(nombresPosiblesMujer.length)]);
         }
         this.apellido=apellidosPosibles[r.nextInt(apellidosPosibles.length)];
         this.nacionalidad=nacionalidadesPosibles[r.nextInt(nacionalidadesPosibles.length)];
         
         //TODO mañana lo cambiamos
-        //this.edad=(byte)r.nextInt(100);
+        this.setEdad((byte)r.nextInt(100));
         
         this.mascota=new Mascota[r.nextInt(6)];
         for (int i = 0; i < mascota.length; i++) {
@@ -132,10 +134,12 @@ public class Persona extends Animal{
      */
     public String toString() {
         String aux="";
-       if(apellido!=null){
+        aux+=this.getNombre()+" ";
+       if(this.apellido!=null){
             aux+=apellido;
        }
        aux+="\n---------------------\n";
+       aux+="Edad: "+this.getEdad()+"\n";
        if(genero){
            aux+="Genero: Hombre\n";
        }else{
@@ -162,19 +166,9 @@ public class Persona extends Animal{
      * función que añade un año a la edad de la persona
      */
     public void cumplirAños(){
-        //TODO mañana la cambiamos
-        // this.edad++;
+        this.setEdad(this.getEdad()+1);
     }
     
-    /**
-     * función que compara la edad de dos personas
-     * @param p2 persona con la que se comparará la edad
-     * @return true-> this es mayor que p2, false-> en caso contrario
-     */
-    //TODO mañana la cambiamos
-    /*public boolean mayorQue(Persona p2){
-        return edad>p2.edad;
-    }*/
 
     
     /**
