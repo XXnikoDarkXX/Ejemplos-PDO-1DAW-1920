@@ -15,7 +15,7 @@ public class Persona extends Animal{
     private String apellido; //el apellido de la persona
     private boolean genero; //true masculino, false femenino
     private String nacionalidad; //nacionalidad de la persona
-    private Mascota[] mascota; //Las mascotas de esta persona
+    private Mascota[] mascota;   //Las mascotas de esta persona
     private Persona madre; //Madre biológica
     private Persona padre; //Padre biológico
     private static final String[] nombresPosiblesHombre={"Miguel","Raul","Alvaro","Nico","Javi","Dani","Jacob","Juan Luis","Jose","Tiburcio"};
@@ -166,7 +166,7 @@ public class Persona extends Animal{
      * función que añade un año a la edad de la persona
      */
     public void cumplirAños(){
-        this.setEdad(this.getEdad()+1);
+  //      this.setEdad(this.getEdad()+1);
     }
     
 
